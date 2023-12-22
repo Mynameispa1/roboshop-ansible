@@ -54,6 +54,10 @@
      name: mongodb-org-shell
      state: present
 
+  - name: get the categories count
+    ansible.builtin.command:  mongo --host mongodb.pavankumarmuvva.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+    register: product_count
+
   - name: "load catalogue data"
     ansible.builtin.command: mongo --host mongodb.pavankumarmuvva.online < /app/schema/catalogue.js 
     when: product_count.stdout == 0 
