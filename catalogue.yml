@@ -54,6 +54,6 @@
      name: mongodb-org-shell
      state: present
 
-   - name: "load catalogue data"
-     ansible.builtin.command: mongo --host mongodb.pavankumarmuvva.online </app/schema/catalogue.js  
+  - name: "load catalogue data"
+    ansible.builtin.command: mongo --host mongodb.pavankumarmuvva.online </app/schema/catalogue.js  
     
