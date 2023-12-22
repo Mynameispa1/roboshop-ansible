@@ -1,6 +1,6 @@
 ---
 - name: configuring web module
-  ansible.builtin.dnf:
+  ansible.builtin.package:
    name: nginx
    state: present
 
