@@ -15,9 +15,9 @@
     ansible.builtin.user:
      name: roboshop
 
-  - name: "create /app path"
+  - name: "create app directory"
     ansible.builtin.file:
-     path: cd /app
+     path: /app
      state: directory
 
   - name: "download application code to created app directory"
@@ -25,17 +25,11 @@
      url: https://roboshop-builds.s3.amazonaws.com/catalogue.zip
      dest: /tmp
 
-  # - name: "unzip file"
-  #   ansible.builtin.unarchive:
-  #    src: /tmp/catalogue.zip
-  #    dest: /app
-  #    remote_src: yes
-  - name: extract catalogue application
+  - name: "extract catalogue application"
     ansible.builtin.unarchive:
      src: /tmp/catalogue.zip
      dest: /app
-     remote_src: yes 
-
+     remote_src: yes
   - name: "download the dependencies"
     ansible.builtin.command: npm install
     args:
