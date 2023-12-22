@@ -55,5 +55,5 @@
      state: present
 
    - name: "load catalogue data"
-     ansible.builtin.command: mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js  
+     ansible.builtin.command: mongo --host mongodb.pavankumarmuvva.online </app/schema/catalogue.js  
     
