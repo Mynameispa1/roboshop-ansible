@@ -18,4 +18,6 @@
     ansible.builtin.file:
      path: /usr/share/nginx/html/*
      state: file
+     modification_time: now
+     access_time: now
    
