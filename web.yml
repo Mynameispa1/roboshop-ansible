@@ -1,6 +1,11 @@
 ---
 - name: configuring web module
-  ansible.builtin.package:
+  hosts: web
+  become: yes
+  tasks:
+  
+- name: Install nginx package
+  ansible.builtin.dnf:
    name: nginx
    state: present
 
