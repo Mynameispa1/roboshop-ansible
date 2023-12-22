@@ -16,7 +16,7 @@
 
   - name: "Remove the default content from nginx"
     ansible.builtin.file:
-     path: /usr/share/nginx/html/*
+     path: /usr/share/nginx/html/
      state: absent
     
    
