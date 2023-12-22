@@ -8,4 +8,40 @@
   - name: "install nodejs"
     ansible.builtin.package:
      name: "nodejs"
-     state: present   
+     state: present  
+  - name: "create user roboshop" 
+    ansible.builtin.user:
+     name: roboshop
+  - name: "create a path"
+    ansible.builtin.file:
+     path: cd /app
+     state: directory
+  - name: "download application code to created app directory"
+    ansible.builtin.get_url:
+     url: https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+     dest: /tmp/
+  - name: "unzip file"
+    ansible.builtin.unarchive:
+     src: /tmp/catalogue.zip
+     dest: /app
+     remote_src: yes
+  - name: "download the dependencies"
+    ansible.builtin.command: npm install
+    args:
+      chdir: /app  
+  - name: "copy catalogue.service "
+    ansible.builtin.copy:
+     src: catalogue.service 
+     dest: /etc/systemd/system/catalogue.service  
+  - name: "daemon-reload"   
+    ansible.builtin.systemd_service:
+     daemon_reload: true
+  - name: "copy mongodb.repo"
+    ansible.builtin.copy:
+     src: mongodb.repo
+     dest: /etc/yum.repos.d/mongo.repo
+  - name: "Install mongodb client" 
+    ansible.builtin.package:
+     name: mongodb-org
+     state: present
+    
