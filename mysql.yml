@@ -3,15 +3,14 @@
   hosts: mysql
   become: yes
   tasks:
-   - name: "disable mysql"
-     ansible.builtin.dnf:
-      name: mysql-8
-      state: absent
+  #  - name: "disable mysql"
+  #    ansible.builtin.dnf:
+  #     name: mysql-8
+  #     state: absent
 
-   - name: "Install MySQL Server"
-     ansible.builtin.package:
-      name: mysql-5.7
-      state: present
+   - name: "Disable and Install MySQL Server"
+     ansible.builtin.command: dnf module disable mysql -y; dnf install mysql-community-server -y
+      
       
 
 
