@@ -13,7 +13,7 @@
 
    - name: "install mysql"
      ansible.builtin.dnf:
-      name: "mysql-community-server"
+      name: "mysql"
       state: present   
 
       
