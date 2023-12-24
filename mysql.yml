@@ -1,0 +1,11 @@
+---
+- name: "confuring mysql server"
+  hosts:mysql
+  become: yes
+  tasks:
+   - name: "disable mysql"
+     ansible.builtin.dnf:
+      name: mysql
+      state: absent
+
+
