@@ -9,7 +9,7 @@
   #     state: absent
 
    - name: "Disable and Install MySQL Server"
-     ansible.builtin.command: dnf module disable mysql -y; dnf install mysql-community-server -y
+     ansible.builtin.command: dnf module disable mysql -y ; dnf install mysql-community-server -y
       
       
 
