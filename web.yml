@@ -28,10 +28,10 @@
      dest: /usr/share/nginx/html
      remote_src: yes 
 
-  - name: "Create Nginx Reverse Proxy Configuration" 
-    ansible.builtin.command: vim /etc/nginx/default.d/roboshop.conf 
+  # - name: "Create Nginx Reverse Proxy Configuration" 
+  #   ansible.builtin.command: vim /etc/nginx/default.d/roboshop.conf 
 
-  - name: "roboshop.conf content addition "
+  - name: "roboshop.conf content addition"
     ansible.builtin.copy:
      src: roboshop.conf  
      dest: /etc/nginx/default.d/roboshop.conf     
