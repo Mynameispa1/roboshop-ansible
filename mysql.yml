@@ -8,4 +8,10 @@
       name: mysql
       state: absent
 
+   - name: "Install MySQL Server"
+     ansible.builtin.service:
+      name: mysql-community-server    
+      state: present
+      
+
 
