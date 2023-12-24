@@ -9,7 +9,7 @@
       state: absent
 
    - name: "Install MySQL Server"
-     ansible.builtin.service:
+     ansible.builtin.package:
       name: MySQL 5.7 Community Server   
       state: present
       
