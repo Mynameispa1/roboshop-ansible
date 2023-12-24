@@ -5,12 +5,12 @@
   tasks:
    - name: "disable mysql"
      ansible.builtin.dnf:
-      name: mysql
+      name: mysql-8
       state: absent
 
    - name: "Install MySQL Server"
      ansible.builtin.package:
-      name: mysql-community-server
+      name: mysql-5.7
       state: present
       
 
