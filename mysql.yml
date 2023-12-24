@@ -8,8 +8,14 @@
   #     name: mysql-8
   #     state: absent
 
-   - name: "Disable and Install MySQL Server"
-     ansible.builtin.shell: dnf module disable mysql -y ; dnf install mysql-community-server -y
+   - name: "Disable MySQL Server"
+     ansible.builtin.shell: dnf module disable mysql -y
+
+   - name: "install mysql"
+     ansible.builtin.dnf:
+      name: "mysql-community-server"
+      state: present   
+
       
       
 
