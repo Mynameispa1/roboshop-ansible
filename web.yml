@@ -15,7 +15,7 @@
      enabled: yes
 
   - name: "Remove the default content that web server is serving"
-    ansible.builtin.command: rm -rf /usr/share/nginx/html/*
+    ansible.builtin.shell: rm -rf /usr/share/nginx/html/*
      
   - name: "Download the frontend content"
     ansible.builtin.get_url:
