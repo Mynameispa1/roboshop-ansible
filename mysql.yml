@@ -3,17 +3,28 @@
   hosts: mysql
   become: yes
   tasks:
-  #  - name: "disable mysql"
-  #    ansible.builtin.dnf:
-  #     name: mysql-8
-  #     state: absent
+  - name: "Disable MySQL Server"
+    ansible.builtin.shell: dnf module disable mysql -y
 
-   - name: "Disable MySQL Server"
-     ansible.builtin.shell: dnf module disable mysql -y
+  - name: "Setup the MySQL5.7 repo"
+    ansible.builtin.copy:
+     src: mysql.repo
+     dest: /etc/yum.repos.d/
 
-   - name: "install mysql"
-     ansible.builtin.shell: dnf install mysql-community-server -y
-       
+
+  - name: "install mysql"
+    ansible.builtin.package:
+     name: mysql-community-server
+     state: present
+
+  - name: "start and enable services"
+    ansible.builtin.service:
+     name: mysql
+     state: restarted
+     enabled: yes
+
+  - name: setup root password
+    ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1   
 
       
       
