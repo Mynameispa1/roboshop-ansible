@@ -1,0 +1,29 @@
+---
+- name: "Redis component configuration"
+  hosts: redis
+  become: yes
+  tasks:
+  - name: "install remi release"
+    anisble.buildin.package:
+     name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+     state: present
+  
+  - name: "Enable Redis 6.2 from package"
+    ansible.buildin.command: dnf module enable redis:remi-6.2 
+
+  - name: "install redis"
+    ansible.builtin.package:
+     name: redis
+     state: present
+
+  - name: "Replace configuration"
+    ansible.builtin.replace:
+     path: /etc/redis.conf
+     regexp: '127.0.0.0'
+     replace: '0.0.0.0'
+
+  - name: "start and enable redis"
+    ansible.builtin.service:
+     name: redis
+     state: restarted
+     enabled: yes     
