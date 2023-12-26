@@ -1,0 +1,70 @@
+---
+- name: "user installation"
+  hosts: user
+  become: yes
+  tasks:
+  - name: "disable and enable nodejs"
+    ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y 
+
+  - name: "Install nodejs"
+    ansible.builtin.package:
+     name: nodejs
+     state: present
+
+  - name: "user add roboshop" 
+    ansible.builtin.user:
+     name: roboshop
+
+  - name: "create a directory"
+    ansible.builtin.file:
+     name: /app
+     state: directory
+
+  - name: "download application code to created app directory"
+    ansible.builtin.get_url:
+     url: https://roboshop-builds.s3.amazonaws.com/user.zip
+     dest: /tmp
+
+  - name: "extract catalogue application"
+    ansible.builtin.unarchive:
+     src: /tmp/user.zip
+     dest: /app
+     remote_src: yes   
+
+  - name: "download the dependencies"
+    ansible.builtin.command: npm install
+    args:
+      chdir: /app   
+
+  - name: "copy catalogue.service "
+    ansible.builtin.copy:
+     src: user.service 
+     dest: /etc/systemd/system/user.service    
+
+  - name: "daemon-reload"   
+    ansible.builtin.systemd_service:
+     daemon_reload: true  
+
+  - name: "copy mongodb.repo"
+    ansible.builtin.copy:
+     src: mongodb.repo
+     dest: /etc/yum.repos.d/mongo.repo    
+
+  - name: "Install mongodb client" 
+    ansible.builtin.package:
+     name: mongodb-org-shell
+     state: present
+
+  - name: get the users count
+    ansible.builtin.command:  mongo --host mongodb.pavankumarmuvva.online --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
+    register: user_count
+
+  - name: load user data
+    ansible.builtin.command: mongo --host mongodb.pavankumarmuvva.online < /app/schema/user.js
+    when: user_count.stdout == "0" # keep double quotes   
+
+  - name: start and enable user
+    ansible.builtin.service:
+      name: user
+      state: restarted
+      enabled: yes     
